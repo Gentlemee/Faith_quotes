@@ -1,0 +1,206 @@
+<!-- love_notes_by_faith.html -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Love Notes by Faith 💌</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg1: #fff0f6;
+      --bg2: #fce7f3;
+      --accent: #ff6fa3;
+      --accent-2: #b581ff;
+      --text: #3b2a2a;
+      --card: rgba(255,255,255,0.8);
+      --glass: rgba(255,255,255,0.6);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+      background: linear-gradient(135deg,var(--bg1),var(--bg2));
+      color:var(--text);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:32px;
+      overflow:hidden;
+    }
+    .container{
+      width:100%;max-width:820px;background:linear-gradient(180deg,rgba(255,255,255,0.85),rgba(255,255,255,0.75));border-radius:20px;box-shadow:0 10px 30px rgba(98,44,99,0.12);padding:28px;position:relative;backdrop-filter:blur(6px) saturate(120%);border:1px solid rgba(255,255,255,0.6);
+    }
+    header{display:flex;gap:16px;align-items:center;justify-content:space-between;margin-bottom:10px}
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{width:64px;height:64px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:white;font-weight:700;font-size:28px;box-shadow:0 6px 18px rgba(181,129,255,0.24)}
+    h1{font-family:'Dancing Script',cursive;margin:0;font-size:28px}
+    p.lead{margin:0;color:rgba(59,42,42,0.8);font-size:14px}
+    .card{margin-top:18px;padding:26px;border-radius:16px;background:var(--card);min-height:160px;display:flex;align-items:center;justify-content:center}
+    .note{font-size:20px;text-align:center;padding:8px 16px;line-height:1.45;max-width:720px;transform:translateY(6px);opacity:0;transition:all 420ms cubic-bezier(.2,.9,.23,1);color:#3b2a2a;}
+    .note.show{opacity:1;transform:translateY(0)}
+    .controls{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:18px}
+    button{border:0;padding:12px 18px;border-radius:12px;font-weight:600;cursor:pointer;font-size:15px;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:white;box-shadow:0 8px 18px rgba(197,111,192,0.16);transition:transform .14s ease,box-shadow .14s ease;}
+    button:active{transform:translateY(2px)}
+    button.secondary{background:transparent;color:var(--accent-2);border:1px solid rgba(181,129,255,0.28);box-shadow:none;font-weight:600}
+    .meta{display:flex;gap:10px;align-items:center;justify-content:center;margin-top:12px;font-size:13px;color:rgba(59,42,42,0.6)}
+    footer{margin-top:18px;text-align:center;font-size:13px;color:rgba(59,42,42,0.65)}
+    .hearts{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+    .heart{position:absolute;width:18px;height:18px;transform:rotate(45deg);background:linear-gradient(135deg,var(--accent),#ff9ecf);border-radius:3px;opacity:0.9;filter:drop-shadow(0 6px 12px rgba(197,111,192,0.18))}
+    .heart:before,.heart:after{content:'';position:absolute;width:18px;height:18px;border-radius:50%;background:inherit;top:-9px;left:0}
+    .heart:after{left:-9px;top:0}
+    @media (max-width:520px){.container{padding:18px;border-radius:14px}.logo{width:52px;height:52px;font-size:22px}h1{font-size:22px}.note{font-size:18px}button{padding:10px 14px}}
+  </style>
+</head>
+<body>
+  <div class="container" role="main">
+    <div class="hearts" aria-hidden="true"></div>
+    <header>
+      <div class="brand">
+        <div class="logo">F</div>
+        <div>
+          <h1>Love Notes by Faith</h1>
+          <p class="lead">Tiny notes to warm hearts — click for a sweet surprise.</p>
+        </div>
+      </div>
+      <div style="text-align:right"><small style="font-weight:600;color:rgba(59,42,42,0.6)">Share & spread the love 💞</small></div>
+    </header>
+    <section class="card" aria-live="polite">
+      <div id="note" class="note">Tap "Show me a love note" to reveal something sweet.</div>
+    </section>
+    <div class="controls">
+      <button id="showBtn">💖 Show me a love note</button>
+      <button id="copyBtn" class="secondary">📋 Copy</button>
+      <button id="shareBtn" class="secondary">🔗 Share</button>
+    </div>
+    <div class="meta">Tip: Click again for a new note • </div>
+    <footer><marquee>Made with 💖 by Faith</marquee></footer>
+  </div>
+  <script>
+    const notes = [
+      "You make ordinary moments feel like little miracles.",
+      "If smiles were stars, yours would light up the whole sky.",
+      "Meeting you was like finding a song I wanted to play forever.",
+      "You’re the calm that turns my chaos into peace.",
+      "I like you more than coffee — and I really like coffee.",
+      "Your laugh is my favorite melody; keep playing it.",
+      "With you, even Mondays feel like a hug.",
+      "Your kindness is my favorite thing about you.",
+      "If I could give you one thing, it would be the ability to see yourself through my eyes.",
+      "Every time I think of you, I get a little giddy — in the best way.",
+      "You turn simple days into treasured memories.",
+      "You’re the reason I believe in sweet surprises.",
+      "Being with you feels like coming home.",
+      "I adore how effortlessly you make life brighter.",
+      "You are loved, wildly and truly, for exactly who you are.",
+      "Your presence is my favorite present.",
+      "If kisses were leaves, I’d give you a forest.",
+      "I carry you in my heart like a secret sparkle.",
+      "You’re the softest thought at the end of a long day.",
+      "Some hearts speak louder than words — yours sings to mine.",
+      "You’re my today and all of my tomorrows.",
+      "Love looks good on you.",
+      "You’re the poetry I didn’t know how to write.",
+      "If hugs were snowflakes, I’d send you a blizzard.",
+      "You make my heart do little happy dances.",
+      "Your name is my favorite word.",
+      "Even the stars envy how you shine.",
+      "You are my favorite chapter in life’s story.",
+      "You’re proof that dreams can walk and talk.",
+      "If love had a face, it would look like yours.",
+      "You’re my happy place.",
+      "You’re the reason love songs make sense.",
+      "The world feels softer with you in it.",
+      "My heart smiles every time it remembers you.",
+      "You’re sunshine wrapped in human form.",
+      "Your eyes are where my heart feels safe.",
+      "I’d choose you in every universe.",
+      "You’re the wish the stars granted me.",
+      "You’re my daily dose of magic.",
+      "Love is easy when it’s with you.",
+      "You’re my heart’s favorite notification.",
+      "You turn ordinary into extraordinary.",
+      "You’re my calm in every storm.",
+      "You’re the love letter I never need to send.",
+      "I love the way your soul smiles.",
+      "You’re my sweetest hello and hardest goodbye.",
+      "The universe must have spent a little extra time on you.",
+      "Your love feels like home.",
+      "If I could relive a moment, it would be the first time I met you.",
+      "You’re a dream I don’t want to wake up from.",
+      "You make love look effortless.",
+      "Every heartbeat whispers your name.",
+      "You’re the sparkle in my favorite memories.",
+      "You’re the melody my heart hums when it’s happy.",
+      "Your smile could heal galaxies.",
+      "You’re my forever kind of feeling.",
+      "You make time pause and the world feel lighter.",
+      "Your love is my favorite story to tell.",
+      "You’re everything my heart ever needed.",
+      "You’re the best decision I never planned.",
+      "Your love paints my world in brighter colors.",
+      "You’re my favorite coincidence.",
+      "Every glance from you feels like a love note.",
+      "You’re the rhythm my heart dances to.",
+      "You’re the reason I believe in serendipity.",
+      "You’re love wrapped in laughter.",
+      "I see my forever when I look at you.",
+      "You’re the magic in my every day.",
+      "You’re a page my heart re-reads again and again.",
+      "You’re proof that fairytales can be real.",
+      "You’re the calm after every storm.",
+      "You’re the love I didn’t see coming.",
+      "You’re my sweetest adventure.",
+      "You’re my reason to smile on cloudy days.",
+      "You’re the story I’ll never get tired of telling.",
+      "You’re love made visible.",
+      "You’re the laughter that echoes in my heart.",
+      "You make ordinary feel magical.",
+      "You’re my favorite hello.",
+      "You’re my happily ever after.",
+      "You make the world feel brand new.",
+      "You’re my comfort and my chaos.",
+      "You’re my heart’s gentle whisper.",
+      "You’re the reason smiles were invented.",
+      "You’re my favorite notification.",
+      "You’re my favorite thought of the day.",
+      "You make every second sweeter.",
+      "You’re the kind of person hearts write poetry about.",
+      "You make life feel like a slow dance.",
+      "You’re my love language.",
+      "You’re my person, my peace, my home.",
+      "You’re every beautiful word I can’t say.",
+      "You’re my kind of miracle.",
+      "You’re my 11:11 wish come true.",
+      "You’re love’s favorite masterpiece.",
+      "You’re my reason to believe again.",
+      "You’re my gentle morning and peaceful night.",
+      "You’re the answer my heart didn’t know it was asking for.",
+      "You’re every heartbeat in my favorite song.",
+      "You’re my always and forever.",
+      "You’re the warmth in my world of chill.",
+      "You’re the light that never fades.",
+      "You’re the reason my heart feels full.",
+      "You’re love, laughter, and light all in one."
+    ];
+
+    const noteEl=document.getElementById('note');
+    const showBtn=document.getElementById('showBtn');
+    const copyBtn=document.getElementById('copyBtn');
+    const shareBtn=document.getElementById('shareBtn');
+
+    function randomNote(){return notes[Math.floor(Math.random()*notes.length)];}
+    function revealText(text){noteEl.classList.remove('show');setTimeout(()=>{noteEl.textContent=text;noteEl.classList.add('show');},80);}
+    showBtn.addEventListener('click',()=>{const txt=randomNote();revealText(txt);burstHearts(6);});
+    copyBtn.addEventListener('click',async()=>{const text=noteEl.textContent||'';try{await navigator.clipboard.writeText(text);copyBtn.textContent='✅ Copied';setTimeout(()=>copyBtn.textContent='📋 Copy',1400);}catch(e){copyBtn.textContent='❌ Cannot copy';setTimeout(()=>copyBtn.textContent='📋 Copy',1400);}});
+    shareBtn.addEventListener('click',async()=>{const text=noteEl.textContent||'';const shareData={title:'Love Notes by Faith',text:text+' \n— via Love Notes by Faith',url:window.location.href};if(navigator.share){try{await navigator.share(shareData);}catch(e){}}else{try{await navigator.clipboard.writeText(shareData.text+' '+shareData.url);shareBtn.textContent='🔗 Copied link';setTimeout(()=>shareBtn.textContent='🔗 Share',1400);}catch(e){shareBtn.textContent='❌ Cannot share';setTimeout(()=>shareBtn.textContent='🔗 Share',1400);}}});
+
+    const heartsLayer=document.querySelector('.hearts');
+    function makeHeart(x,y,size,duration){const el=document.createElement('div');el.className='heart';el.style.left=x+'px';el.style.top=y+'px';el.style.width=size+'px';el.style.height=size+'px';el.style.opacity=(0.6+Math.random()*0.4).toFixed(2);const accent=['#ff7ab6','#ff9ecf','#b581ff','#ff6fa3'];el.style.background=`linear-gradient(135deg, ${accent[Math.floor(Math.random()*accent.length)]}, #ffd1ea)`;heartsLayer.appendChild(el);const endY=y-(120+Math.random()*160);const endX=x+(Math.random()*60-30);el.animate([{transform:'translate(0,0) rotate(45deg)',opacity:el.style.opacity},{transform:`translate(${endX-x}px, ${endY-y}px) rotate(45deg)`,opacity:0}],{duration:duration,easing:'cubic-bezier(.2,.9,.23,1)'});setTimeout(()=>el.remove(),duration);}
+    function burstHearts(count=6){const rect=heartsLayer.getBoundingClientRect();for(let i=0;i<count;i++){const x=Math.random()*rect.width;const y=rect.height-40-Math.random()*40;const size=12+Math.random()*24;const dur=900+Math.random()*900;makeHeart(x,y,size,dur);}}
+    setInterval(()=>burstHearts(2),2200);
+    window.addEventListener('load',()=>{revealText(randomNote());burstHearts(8);});
+  </script>
+</body>
+</html>
