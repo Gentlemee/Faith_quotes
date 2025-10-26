@@ -31,9 +31,9 @@ You can view it live here:
 
 ## 🛠️ Built With
 
-- **HTML5** – Structure  
-- **CSS3** – Styling & animation  
-- **JavaScript (ES6)** – Functionality  
+- **HTML** – Structure  
+- **CSS** – Styling & animation  
+- **JavaScript ** – Functionality  
 - **GitHub Pages** – Free hosting  
 
 ---
